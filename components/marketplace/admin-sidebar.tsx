@@ -43,9 +43,6 @@ const userAppItems = [
 	},
 ] as const;
 
-const userName = "Juan Perez";
-const userEmail = "jperez@empresa.com";
-
 function MarketplaceSidebarContent() {
 	const pathname = usePathname();
 	const sidebar = useSidebar();
@@ -64,32 +61,43 @@ function MarketplaceSidebarContent() {
 	return (
 		<ul className="space-y-1">
 			<li>
-				<button
-					type="button"
-					onClick={() => !collapsed && setMarketplaceOpen((o) => !o)}
-					className={cn(
-						"flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-all duration-200",
-						["marketplace", "dashboard", "communities"].includes(activeItem)
-							? "bg-primary/10 text-primary"
-							: "text-muted-foreground hover:bg-muted hover:text-foreground",
-						collapsed && "justify-center px-2",
-					)}
-					title={collapsed ? "Marketplace" : undefined}
-				>
-					<span>
-						<Store className="h-5 w-5" />
-					</span>
+				<div className="flex w-full items-stretch">
+					<Link
+						href="/admin/marketplace"
+						className={cn(
+							"flex flex-1 min-w-0 items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-all duration-200",
+							["marketplace", "dashboard", "communities"].includes(activeItem)
+								? "bg-primary/10 text-primary"
+								: "text-muted-foreground hover:bg-muted hover:text-foreground",
+							collapsed && "justify-center px-2",
+						)}
+						title={collapsed ? "Marketplace" : undefined}
+					>
+						<span>
+							<Store className="h-5 w-5" />
+						</span>
+						{!collapsed && <span className="flex-1 text-left">Marketplace</span>}
+					</Link>
 					{!collapsed && (
-						<>
-							<span className="flex-1 text-left">Marketplace</span>
+						<button
+							type="button"
+							onClick={() => setMarketplaceOpen((o) => !o)}
+							className={cn(
+								"flex items-center rounded-xl px-2 text-muted-foreground hover:bg-muted hover:text-foreground",
+								["marketplace", "dashboard", "communities"].includes(activeItem)
+									? "text-primary"
+									: "",
+							)}
+							aria-expanded={marketplaceOpen}
+						>
 							{marketplaceOpen ? (
 								<ChevronDown className="h-4 w-4 shrink-0" />
 							) : (
 								<ChevronRight className="h-4 w-4 shrink-0" />
 							)}
-						</>
+						</button>
 					)}
-				</button>
+				</div>
 				{!collapsed && marketplaceOpen && (
 					<ul className="mt-1 space-y-0.5 border-l border-border/60 pl-4 ml-3">
 						{marketplaceSubItems.map((sub) => {
