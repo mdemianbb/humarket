@@ -63,7 +63,7 @@ export default function CommunityDetailPage() {
   if (!community) return <p className="text-gray-400 p-6">Cargando...</p>
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto p-6">
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
         <Link href="/admin/communities" className="text-purple-600 hover:underline text-sm">← Comunidades</Link>
